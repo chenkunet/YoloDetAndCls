@@ -1,0 +1,9 @@
+train: /mnt/sdb4/pytorch/PoseDetect/dataset/det/images/train
+val: /mnt/sdb4/pytorch/PoseDetect/dataset/det/images/val
+
+names:
+  0: face
+  1: hand
+
+nc: 2
+
