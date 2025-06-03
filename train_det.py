@@ -1,5 +1,7 @@
 from ultralytics import YOLO
-
+"""
+    检测模型训练
+"""
 # Load a model
 model = YOLO("model/yolo11x.pt") # build from YAML and transfer weights
 

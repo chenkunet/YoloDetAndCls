@@ -87,7 +87,7 @@ class CascadeYoloDetAndCls:
 
 if __name__ == "__main__":
     images = cv2.imread('images/B1_langren_00001.jpg')
-    model = CascadeYoloDetAndCls(detect_weight='model/hand11x.pt', classify_weight='model/cls.pt', device='cuda:0')
+    model = CascadeYoloDetAndCls(detect_weight='model/hand11x.pt', classify_weight='model/cls.pt', device='cuda:0') # 无gpu时使用 device='cpu'
     res = model.predict_image(images)
     print(res)
     images = draw_boxes(images, res)
