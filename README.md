@@ -20,3 +20,5 @@ Yolo11部分的可以参考原项目：https://github.com/ultralytics/ultralytic
 2、如果使用GPU, 建议先基于官网安装好pytorch依赖： https://pytorch.org/
 
 3、执行： pip install ultralytics
+
+请参考 det_and_cls.py 中的使用示例

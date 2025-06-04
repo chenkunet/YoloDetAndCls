@@ -194,5 +194,5 @@ cython_debug/
 .cursorindexingignore
 
 # add
-*.pt
-*.jpg
+# *.pt
+# *.jpg

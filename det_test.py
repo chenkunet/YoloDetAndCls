@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 
 # Load a model
-model = YOLO("runs/detect/det_train_c2/weights/best.pt").to('cuda:2')  # load a custom model
+model = YOLO('model/hand11x.pt').to('cuda:2')  # load a custom model
 
 # Predict with the model
 results = model("images/B1_langren_00001.jpg")  # predict on an image
