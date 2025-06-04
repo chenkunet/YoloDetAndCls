@@ -83,12 +83,50 @@ class CascadeYoloDetAndCls:
                 'conf': conf
             })
         return res
+    
+    def infer_video(self, video_path, save_path, frame_interval=5, min_box=5, box_color=(0,255,0)):
+        """
+        对视频进行推理，每frame_interval帧推理一次，其他帧复用上次结果。
+        输入:
+            video_path: 原视频文件路径
+            save_path: 保存推理结果视频文件路径
+            frame_interval: 每隔多少帧推理一次
+        """
+        cap = cv2.VideoCapture(str(video_path))
+        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        out = cv2.VideoWriter(str(save_path), fourcc, fps, (width, height))
+
+        last_result = []
+        frame_id = 0
+
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                break
+
+            # 对间隔帧推理
+            if frame_id % frame_interval == 0:
+                last_result = self.predict_image(frame, min_box=min_box)
+
+            # 绘制结果
+            vis_img = draw_boxes(frame, last_result, box_color=box_color)
+            out.write(vis_img)
+
+            frame_id += 1
+
+        cap.release()
+        out.release()
+        print(f"推理完成，已保存：{save_path}")
 
 
 if __name__ == "__main__":
     images = cv2.imread('images/B1_langren_00001.jpg')
-    model = CascadeYoloDetAndCls(detect_weight='model/hand11x.pt', classify_weight='model/cls.pt', device='cuda:0') # 无gpu时使用 device='cpu'
+    model = CascadeYoloDetAndCls(detect_weight='model/hand11s.pt', classify_weight='model/cls.pt', device='cuda:2')
     res = model.predict_image(images)
     print(res)
     images = draw_boxes(images, res)
     cv2.imwrite("result.jpg", images)
+    model.infer_video(video_path='images/test_video.mp4',save_path='result_video.mp4')
