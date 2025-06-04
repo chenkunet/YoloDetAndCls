@@ -121,6 +121,7 @@ class CascadeYoloDetAndCls:
         out.release()
         print(f"推理完成，已保存：{save_path}")
 
+
 if __name__ == "__main__":
     # 单图分析
     images = cv2.imread('images/B1_langren_00001.jpg')
